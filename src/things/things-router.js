@@ -21,7 +21,7 @@ thingsRouter
   });
 
 thingsRouter
-  .route("/_id/reviews/")
+  .route("/:thing_id/reviews/")
   .all(requireAuth)
   .all(checkThingExists)
   .get((req, res, next) => {
