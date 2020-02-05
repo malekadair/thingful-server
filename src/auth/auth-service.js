@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const AuthService = {
   getUserWithUserName(db, user_name) {
+    console.log("username", user_name);
     return db("thingful_users")
       .where({ user_name })
       .first();
@@ -20,6 +21,11 @@ const AuthService = {
     return jwt.sign(payload, config.JWT_SECRET, {
       subject,
       algorithm: "HS256"
+    });
+  },
+  verifyJwt(token) {
+    return jwt.verify(token, config.JWT_SECRET, {
+      algorithms: ["HS256"]
     });
   }
 };
