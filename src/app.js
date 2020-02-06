@@ -8,6 +8,7 @@ const thingsRouter = require("./things/things-router");
 const reviewsRouter = require("./reviews/reviews-router");
 const authRouter = require("./auth/auth-router");
 const app = express();
+const usersRouter = require("./users/users-router");
 
 app.use(
   morgan(NODE_ENV === "production" ? "tiny" : "common", {
@@ -20,6 +21,7 @@ app.use(helmet());
 app.use("/api/things", thingsRouter);
 app.use("/api/reviews", reviewsRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
