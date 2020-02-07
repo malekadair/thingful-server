@@ -2,6 +2,7 @@ const knex = require("knex");
 const bcrypt = require("bcryptjs");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
+const AuthService = require("../src/auth/auth-service");
 
 describe("Users Endpoints", function() {
   let db;
@@ -38,9 +39,10 @@ describe("Users Endpoints", function() {
 
         it(`responds with 400 required error when '${field}' is missing`, () => {
           delete registerAttemptBody[field];
-
+          const token = AuthService.createJwt("test user_name", { user_id: 1 });
           return supertest(app)
             .post("/api/users")
+            .set("Authorization", `Bearer ${token}`)
             .send(registerAttemptBody)
             .expect(400, {
               error: `Missing '${field}' in request body`
